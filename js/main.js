@@ -91,7 +91,7 @@ locInfo = new google.maps.InfoWindow();
 function wikiLink(marker) {
     //AJAX request for Wikipedia link:
     //initializing a variable
-    var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+    var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
     var wikiReqTimeout = setTimeout(function(){
         alert("Failed to get Wikipedia resources");
     }, 8000);
@@ -114,7 +114,7 @@ function populateInfoWindow(marker,locInfo) {
     locInfo.marker = marker;
     if (marker.url != undefined) {
         var wikiString = '<div><h2>' + marker.title + '</h2><br><hr><h4><a href = "' + marker.url + '">' + 'Wikipedia Link' + '</a></h4>';
-        var streetViewString = '<img src ="http://maps.googleapis.com/maps/api/streetview?size=300x100&location=' + marker.title + '&key=AIzaSyAxD5mgFLhdkpdMY75kZGPpe7-luaa3Qso">';
+        var streetViewString = '<img src ="https://maps.googleapis.com/maps/api/streetview?size=300x100&location=' + marker.title + '&key=AIzaSyAxD5mgFLhdkpdMY75kZGPpe7-luaa3Qso">';
         var infoString = wikiString + '<div>' + streetViewString + '</div>';
         locInfo.setContent(infoString);
     }
