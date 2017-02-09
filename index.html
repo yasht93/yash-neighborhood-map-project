@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta author="yash">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <style type="text/css">
+            #map {
+                height: 100%;
+                width:100%;
+                position: absolute;
+            }
+        </style>
+        <title>Pune-Places of Interest</title>
+    </head>
+    <body>
+        <div id = "map"></div>
+
+       <script type="text/javascript" src = "js/knockout.js"></script>
+       <script type="text/javascript" src = "js/jquery-3.1.0.min.js"></script>
+       <script type="text/javascript" src = "js/main.js"></script>
+       <script async defer type="text/javascript" src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAxD5mgFLhdkpdMY75kZGPpe7-luaa3Qso&v=3&callback=initMap" onerror="loadError()"></script>
+    </body>
+</html>
