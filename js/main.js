@@ -131,7 +131,7 @@ function populateInfoWindow(marker,locInfo) {
     }
     locInfo.open(map, marker);
     locInfo.addListener('closeclick', function() {
-        locInfo.setAnimation(null);     // in case the marker has not stopped animating, do so on closing it
+        marker.setAnimation(null);     // in case the marker has not stopped animating, do so on closing it
         locInfo.marker = null;      //set null as the info in infoWindow
 
     });
