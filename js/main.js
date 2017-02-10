@@ -60,7 +60,7 @@ function initMap() {
                 lat: 18.474727,
                 lng: 73.848164
         },
-        zoom: 12
+        zoom: 11
     });
     pushMarkers(); //to push individual (i'th) marker on the map
 }
@@ -70,8 +70,7 @@ function loadError() {
     alert("Sorry, could not load the Map!");
 }
 
-//function for markers
-//var markers = [];
+//function for markers:
 
 function pushMarkers() {
 locInfo = new google.maps.InfoWindow();
@@ -143,5 +142,5 @@ function toggleBounce(marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
         marker.setAnimation(google.maps.Animation.null);
-    }, 5000);
+    }, 1000);
 }
