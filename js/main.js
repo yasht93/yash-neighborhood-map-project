@@ -116,7 +116,7 @@ function wikiLink(marker) {
 //function to populate info window of each marker
 function populateInfoWindow(marker,locInfo) {
     locInfo.marker = marker;
-    if (marker.url != undefined) {
+    if (marker.url !== undefined) {
         var heading = '<div><h2>' + marker.title + '</h2></div>';       //the name of the place displayed as the heading of the infoWindow
         var wikiString = '<hr><h4><a href = "' + marker.url + '">' + 'Wikipedia Link' + '</a></h4>';        //the wikipedia link of the corresponding place
         var streetViewString = '<img src ="https://maps.googleapis.com/maps/api/streetview?size=300x100&location=' + marker.title + '&key=AIzaSyAxD5mgFLhdkpdMY75kZGPpe7-luaa3Qso">';//the streetview of the corresponding place
@@ -162,7 +162,7 @@ var viewModel = function() {
         if (self.query()) {
             var placeFilter = self.query().toLowerCase();       //to enable the user to enter search in upper or lower case
             return ko.utils.arrayFilter(self.locationArray(), function(place) {
-                var thisTitle = place.title.toLowerCase()
+                var thisTitle = place.title.toLowerCase();
                 var finalStringSet = thisTitle.indexOf(placeFilter);
                 if (finalStringSet >= 0) {
                     place.marker.setVisible(true);
