@@ -142,6 +142,14 @@ function toggleBounce(marker) {
     }, 1500);   // this will animate a 'bouncing' effect on te marker for a second and a half
 }
 
+//code for toggling place list in mobile and tablet mode:
+jQuery(function($) {
+    $('.listBtn').click(function() {
+        $('.placeList').toggleClass('expand');
+        console.log("Search Button Clicked");
+    });
+});
+
 //code for the viewModel:
 var locationArray = [];
 var viewModel = function() {

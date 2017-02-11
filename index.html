@@ -10,6 +10,9 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <!--css for positioning the list of places and the map-->
         <style type="text/css">
+            * {
+                box-sizing: border-box;
+            }
             #map {
                 height: 100%;
                 width:78%;
@@ -18,7 +21,7 @@
                 float: right;
             }
             .placeList {
-                display: block;
+                display: none;
                 position: absolute;
                 left:0;
                 float: left;
@@ -26,20 +29,101 @@
                 width: 22%;
                 overflow: y auto;
             }
+            .listBtn {
+                display: block;
+                width: 55px;
+                height: 20px;
+                margin-bottom: 10px;
+                padding: 0 5px;
+            }
+            .expand {
+                display: block !important;
+            }
+            @media only screen and (min-width: 1001px) {
+                    .placeList {
+                    display: block;
+                    position: absolute;
+                    left:0;
+                    float: left;
+                    height: 100%;
+                    width: 22%;
+                    overflow: y auto;
+                }
+                .listBtn {
+                    display: none;
+                }
+            }
+            @media only screen and (max-width: 350px) {
+                .placeList {
+                    padding-top: 5px;;
+                    width: auto;
+                    height: 100%;
+                    font-size: 0.7em;
+                    float: left;
+                    left: 0;
+                    position: absolute;
+                    display: none;
+                    z-index: 99;
+                }
+                .listBtn {
+                    display: block;
+                    width: 55px;
+                    height: 20px;
+                    margin-bottom: 10px;
+                    padding: 0 5px;
+                }
+                #map {
+                    height: 100%;
+                    width:100%;
+                    position: absolute;
+                    right: 0;
+                    float: right;
+                }
+            }
+            @media only screen and (min-width: 351px) and (max-width: 1000px) {
+                .placeList {
+                    padding-top: 5px;;
+                    width: auto;
+                    height: 100%;
+                    float: left;
+                    left: 0;
+                    font-size: 0.9em;
+                    position: absolute;
+                    display: none;
+                    z-index: 99;
+                }
+                .listBtn {
+                    display: block;
+                    width: 55px;
+                    height: 20px;
+                    margin-bottom: 10px;
+                    padding: 0 5px;
+                }
+                #map {
+                    height: 100%;
+                    width:100%;
+                    position: absolute;
+                    right: 0;
+                    float: right;
+                }
         </style>
         <title>Pune-Places of Interest</title>
     </head>
     <body>
         <div class= "navbar navbar-inverse">
             <!--The title-->
-            <h1 class="text-primary"><center>Places of Interest in Pune
-            <div class= "container-fluid placeList">
+            <h1 class="text-primary"><center>Places of Interest in Pune</center></h1>
+
+            <div class= "container-fluid">
+            <div class="listBtn btn-success">Search</div>
+            <div class="placeList">
                 <!--The text box for filtering list item search-->
                 <br><input type="text" class= "form-control input-group-lg list-group-item-success" placeholder= "Search for a place here" data-bind= "textInput: query" autocomplete= "on">
                 <ul class= "list-group" data-bind= "foreach: searchedPlaces">
                     <!--The List items for places-->
                     <li class="list-group-item btn btn-success" data-bind= "text: title, click: $parent.itemSelector"></li>
                 </ul>
+                </div>
             </div>
         </div>
         <!--for Displaying the Map-->
