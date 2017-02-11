@@ -1,3 +1,5 @@
+<!--Neighborhood Map Project-->
+<!--Author: Yash Trivedi-->
 <!DOCTYPE html>
 <html lang = "en">
     <head>
@@ -5,21 +7,48 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta author="yash">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <!--css for positioning the list of places and the map-->
         <style type="text/css">
             #map {
                 height: 100%;
-                width:100%;
+                width:78%;
                 position: absolute;
+                right: 0;
+                float: right;
+            }
+            .placeList {
+                display: block;
+                position: absolute;
+                left:0;
+                float: left;
+                height: 100%;
+                width: 22%;
+                overflow: y auto;
             }
         </style>
         <title>Pune-Places of Interest</title>
     </head>
     <body>
+        <div class= "navbar navbar-inverse">
+            <!--The title-->
+            <h1 class="text-primary"><center>Places of Interest in Pune
+            <div class= "container-fluid placeList">
+                <!--The text box for filtering list item search-->
+                <br><input type="text" class= "form-control input-group-lg list-group-item-success" placeholder= "Search for a place here" data-bind= "textInput: query" autocomplete= "on">
+                <ul class= "list-group" data-bind= "foreach: searchedPlaces">
+                    <!--The List items for places-->
+                    <li class="list-group-item btn btn-success" data-bind= "text: title, click: $parent.itemSelector"></li>
+                </ul>
+            </div>
+        </div>
+        <!--for Displaying the Map-->
         <div id = "map"></div>
 
        <script type="text/javascript" src = "js/knockout.js"></script>
        <script type="text/javascript" src = "js/jquery-3.1.0.min.js"></script>
        <script type="text/javascript" src = "js/main.js"></script>
+       <!--the Google Maps API link-->
        <script async defer type="text/javascript" src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAxD5mgFLhdkpdMY75kZGPpe7-luaa3Qso&v=3&callback=initMap" onerror="loadError()"></script>
     </body>
 </html>

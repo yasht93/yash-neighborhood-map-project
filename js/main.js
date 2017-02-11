@@ -62,7 +62,7 @@ function initMap() {
         },
         zoom: 11
     });
-    pushMarkers(); //to push individual (i'th) marker on the map
+    pushMarkers(); //to push individual marker on the map
 }
 
 //function to display error in case the map is not loaded
@@ -71,7 +71,6 @@ function loadError() {
 }
 
 //function for markers:
-
 function pushMarkers() {
 locInfo = new google.maps.InfoWindow();
     for (var i = 0; i < locations.length; i++) {
@@ -100,7 +99,7 @@ function wikiLink(marker) {
     var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
     var wikiReqTimeout = setTimeout(function(){
         alert("Failed to get Wikipedia resources");
-    }, 8000);
+    }, 8000);       //in case there are no resources found
     $.ajax({
         url: wikiUrl,
         dataType: "jsonp",
@@ -108,8 +107,7 @@ function wikiLink(marker) {
             if(response[3] === null) {
                 alert("No Wikipedia results found!");
             }
-            marker.url = response[3];
-            //console.log(marker.url);
+            marker.url = response[3];       //to assign the value of the third inndex in the array of the searched wikipedia link items through the API
             clearTimeout(wikiReqTimeout);
         }
     });
@@ -119,21 +117,20 @@ function wikiLink(marker) {
 function populateInfoWindow(marker,locInfo) {
     locInfo.marker = marker;
     if (marker.url != undefined) {
-        var heading = '<div><h2>' + marker.title + '</h2></div>';
-        var wikiString = '<hr><h4><a href = "' + marker.url + '">' + 'Wikipedia Link' + '</a></h4>';
-        var streetViewString = '<img src ="https://maps.googleapis.com/maps/api/streetview?size=300x100&location=' + marker.title + '&key=AIzaSyAxD5mgFLhdkpdMY75kZGPpe7-luaa3Qso">';
-        var infoString = heading + '<div>' + wikiString + '</div><div>' + streetViewString + '</div>';
+        var heading = '<div><h2>' + marker.title + '</h2></div>';       //the name of the place displayed as the heading of the infoWindow
+        var wikiString = '<hr><h4><a href = "' + marker.url + '">' + 'Wikipedia Link' + '</a></h4>';        //the wikipedia link of the corresponding place
+        var streetViewString = '<img src ="https://maps.googleapis.com/maps/api/streetview?size=300x100&location=' + marker.title + '&key=AIzaSyAxD5mgFLhdkpdMY75kZGPpe7-luaa3Qso">';//the streetview of the corresponding place
+        var infoString = heading + '<div>' + wikiString + '</div><div>' + streetViewString + '</div>';      //combining all the infoWindow matter into a single variable
         locInfo.setContent(infoString);
         console.log("InfoWindow code: " + infoString);
     }
     else {
-        locInfo.setContent("No info available!");
+        locInfo.setContent("No info available!");   //in case no wikipedia and streetview information is available
     }
     locInfo.open(map, marker);
     locInfo.addListener('closeclick', function() {
         marker.setAnimation(null);     // in case the marker has not stopped animating, do so on closing it
         locInfo.marker = null;      //set null as the info in infoWindow
-
     });
 }
 
@@ -142,5 +139,49 @@ function toggleBounce(marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
         marker.setAnimation(google.maps.Animation.null);
-    }, 1000);
+    }, 1500);   // this will animate a 'bouncing' effect on te marker for a second and a half
 }
+
+//code for the viewModel:
+var locationArray = [];
+var viewModel = function() {
+
+    var self = this;
+    self.locationArray = ko.observableArray();      //initializing an observable array for the list of locations
+    for (var i = 0; i < locations.length; i++) {
+        self.locationArray.push(locations[i]);
+    }
+
+    self.query = ko.observable('');
+
+    self.itemSelector = function(locations) {
+        toggleBounce(locations.marker);
+        new google.maps.event.trigger(locations.marker, "click");       //to select the corresponding marker on clicking the list item
+    };
+    self.searchedPlaces = ko.computed(function() {       //function for filtering places
+        if (self.query()) {
+            var placeFilter = self.query().toLowerCase();       //to enable the user to enter search in upper or lower case
+            return ko.utils.arrayFilter(self.locationArray(), function(place) {
+                var thisTitle = place.title.toLowerCase()
+                var finalStringSet = thisTitle.indexOf(placeFilter);
+                if (finalStringSet >= 0) {
+                    place.marker.setVisible(true);
+                }
+                else {
+                    place.marker.setVisible(false);
+                }
+                return place.title.toLowerCase().indexOf(placeFilter) > -1;
+            });
+        } else {
+            self.locationArray().forEach(function(locations) {
+                if (locations.marker) {
+                    locations.marker.setVisible(true);      //this will display the markers
+                }
+            });
+            return self.locationArray();
+        }
+    });
+};
+//apply bindings of the viewModel
+ko.applyBindings(new viewModel());
+
