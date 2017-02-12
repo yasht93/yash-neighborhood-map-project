@@ -8,7 +8,7 @@ Udacity fend Neigborhood Map Project
 - Alternatively, you can also search from the given places of interest using a search panel on the left side of the window.
 - For Mobile and Tablet users, the search panel display can be toggled using the `search` button.
 
-##Libraries and Reference Resources
+##Libraries, Frameworks and Reference Resources
 - http://stackoverflow.com/
 - https://jsfiddle.net/
 - http://www.w3schools.com/
