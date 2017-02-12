@@ -17,3 +17,5 @@ Udacity fend Neigborhood Map Project
 - http://knockoutjs.com
 - http://getbootstrap.com/
 - https://jquery.com/
+- https://developers.google.com/maps/
+- https://www.mediawiki.org/wiki/API:Main_page
